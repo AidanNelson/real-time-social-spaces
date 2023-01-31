@@ -1,10 +1,10 @@
 # Real Time Social Spaces
 
-Examples for the Real-Time Social Spaces courses for NYU's Interactive Media Arts / Interactive Telecommunications Program.
+Examples for the Real-Time Social Spaces courses for NYU's Interactive Telecommunications Program.
 
-Live versions of the p5 examples can be [seen here](https://editor.p5js.org/AidanNelson/collections/1cBiKD7jF).
+To start these examples, use the VSCode LiveServer extension and press "Go Live". In your browser, navigate to the address `http://localhost:5500/examples/` and click on any of the examples.
 
-![a browser window shows a live webcam video as a grid of colored rectangles](./images/week-1-0-working-with-video.png)
+![image of cats is shown on a floating 3D box](./images/cats.png)
 
 ## Week 1
 
@@ -21,3 +21,9 @@ Live versions of the p5 examples can be [seen here](https://editor.p5js.org/Aida
 - [Shadows](./examples/2-textures/) - this scene uses lights and shadows
 - [Image Textures](./examples/2-image-texture/) - this scene uses an image file as a texture on a 3D object
 - [Video Textures](./examples/2-video-texture) - this scene uses a `<video>` element as a texture on a 3D object
+
+### Links:
+
+- [Import Syntax](https://threejs.org/docs/index.html?q=in#manual/en/introduction/Installation) - see section header **Install from CDN or static hosting** for more info on using three.js as a module
+- [Mozilla Developer Network (MDN) on Javascript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+- [Loading Image Textures](https://threejs.org/docs/index.html?q=texturel#api/en/loaders/TextureLoader)
