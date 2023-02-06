@@ -27,7 +27,3 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 - [Import Syntax](https://threejs.org/docs/index.html?q=in#manual/en/introduction/Installation) - see section header **Install from CDN or static hosting** for more info on using three.js as a module
 - [Mozilla Developer Network (MDN) on Javascript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 - [Loading Image Textures](https://threejs.org/docs/index.html?q=texturel#api/en/loaders/TextureLoader)
-
-## Week 3
-
-## Week 4
