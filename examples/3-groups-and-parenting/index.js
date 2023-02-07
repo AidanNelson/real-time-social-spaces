@@ -1,10 +1,5 @@
 /*
-This example uses a function named "loop" to tell the renderer to render. This function will call
-the  'window.requestAnimationFrame()' function to tell the browser window to continue drawing 
-at 60 frames per second.  
-
-RequestAnimationFrame: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-
+This example uses parenting and the empty THREE.Group() objects to create unique spatial relationships.
 
 */
 import * as THREE from "three";
@@ -36,6 +31,13 @@ function init() {
   // add orbit controls
   let controls = new OrbitControls(camera, renderer.domElement);
 
+  // create our bird object
+  createBird();
+
+  loop();
+}
+
+function createBird() {
   // create a parent group
   bird = new THREE.Group();
 
@@ -64,23 +66,21 @@ function init() {
 
   // and add it to the scene
   scene.add(bird);
-
-  loop();
 }
 
 function loop() {
   frameCount++;
 
-  // add some movement
+  // add some movement to the  bird using a sine wave
   bird.position.set(0, 0, Math.sin(frameCount / 100) * 10);
 
+  // create an axis around which we can rotate the wings
   let axis = new THREE.Vector3(0, 0, 1);
   wingParent1.setRotationFromAxisAngle(axis, Math.sin(frameCount / 5) * 0.5);
   wingParent2.setRotationFromAxisAngle(axis, -Math.sin(frameCount / 5) * 0.5);
-  // finally, take a picture of the scene and show it in the <canvas>
-  renderer.render(scene, camera);
 
-  window.requestAnimationFrame(loop); // pass the name of your loop function into this function
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(loop);
 }
 
 init();
