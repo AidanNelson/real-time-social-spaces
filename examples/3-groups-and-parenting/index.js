@@ -10,7 +10,8 @@ RequestAnimationFrame: https://developer.mozilla.org/en-US/docs/Web/API/window/r
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-let scene, camera, renderer, my3DObject;
+let scene, camera, renderer, bird, wingParent1, wingParent2;
+let frameCount = 0;
 
 function init() {
   // create a scene in which all other objects will exist
@@ -35,21 +36,47 @@ function init() {
   // add orbit controls
   let controls = new OrbitControls(camera, renderer.domElement);
 
+  // create a parent group
+  bird = new THREE.Group();
+
   // create a sphere
-  let geometry = new THREE.SphereGeometry(1, 3, 4);
+  let geometry = new THREE.SphereGeometry(1, 12, 12);
   let material = new THREE.MeshBasicMaterial({ color: "blue" });
-  my3DObject = new THREE.Mesh(geometry, material);
+  let body = new THREE.Mesh(geometry, material);
+  bird.add(body);
+
+  let redMat = new THREE.MeshBasicMaterial({ color: "red" });
+  wingParent1 = new THREE.Group();
+
+  let wingGeo = new THREE.BoxGeometry(1, 1, 1);
+  let wing1 = new THREE.Mesh(wingGeo, redMat);
+  wingParent1.add(wing1);
+  wing1.scale.set(4, 0.1, 1);
+  wing1.position.set(-2.5, 0, 0);
+  bird.add(wingParent1);
+
+  let wing2 = new THREE.Mesh(wingGeo, redMat);
+  wingParent2 = new THREE.Group();
+  wingParent2.add(wing2);
+  wing2.scale.set(4, 0.1, 1);
+  wing2.position.set(2.5, 0, 0);
+  bird.add(wingParent2);
 
   // and add it to the scene
-  scene.add(my3DObject);
+  scene.add(bird);
 
   loop();
 }
 
 function loop() {
-  // add some movement
-  my3DObject.rotateY(0.01);
+  frameCount++;
 
+  // add some movement
+  bird.position.set(0, 0, Math.sin(frameCount / 100) * 10);
+
+  let axis = new THREE.Vector3(0, 0, 1);
+  wingParent1.setRotationFromAxisAngle(axis, Math.sin(frameCount / 5) * 0.5);
+  wingParent2.setRotationFromAxisAngle(axis, -Math.sin(frameCount / 5) * 0.5);
   // finally, take a picture of the scene and show it in the <canvas>
   renderer.render(scene, camera);
 
