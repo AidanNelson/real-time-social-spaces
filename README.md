@@ -27,3 +27,16 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 - [Import Syntax](https://threejs.org/docs/index.html?q=in#manual/en/introduction/Installation) - see section header **Install from CDN or static hosting** for more info on using three.js as a module
 - [Mozilla Developer Network (MDN) on Javascript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 - [Loading Image Textures](https://threejs.org/docs/index.html?q=texturel#api/en/loaders/TextureLoader)
+
+## Week 3
+
+### Examples
+
+- [Using Addons](./examples/3-using-addons/) - this scene introduces the ecosystem of THREE's 'addons' in the index.html file and organizes the javascript into an `init()` function
+- [Groups and Parenting](./examples/3-groups-and-parenting/) - this scene creates a bird with flapping wings through the use of groups and parenting
+- [Backgrounds](./examples/3-backgrounds/) - this scene shows 2 ways of making backgrounds, by adding a 'clear color' to the renderer, and through the use of an equirectangular image
+
+### Links:
+
+- [Transform Hierarchy](https://threejs.org/manual/#en/scenegraph) - More on parent-child relationships and global and local space
+- [PolyHaven](https://polyhaven.com/hdris) - One good source for [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain, free) equirectangular images for backgrounds
