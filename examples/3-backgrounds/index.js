@@ -54,11 +54,11 @@ function addBackground() {
   renderer.setClearColor(backgroundColor);
 
   // next, try to uncomment the following to see a 'skybox' image background
-  let loader = new RGBELoader();
-  loader.load("./background.hdr", (texture) => {
-    texture.mapping = THREE.EquirectangularReflectionMapping;
-    scene.background = texture;
-  });
+  // let loader = new RGBELoader();
+  // loader.load("./background.hdr", (texture) => {
+  //   texture.mapping = THREE.EquirectangularReflectionMapping;
+  //   scene.background = texture;
+  // });
 }
 
 function loop() {
