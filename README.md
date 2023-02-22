@@ -40,3 +40,15 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 - [Transform Hierarchy](https://threejs.org/manual/#en/scenegraph) - More on parent-child relationships and global and local space
 - [PolyHaven](https://polyhaven.com/hdris) - One good source for [CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain, free) equirectangular images for backgrounds
+
+## Week 4
+
+### Examples
+
+- [Importing 3D Models](./examples/4-importing-3d-models/) - this scene shows how to add 3D models using a GLTF model loader.
+- [Spatial Sound](./examples/4-spatial-sound/) - this scene shows how to add a spatial audio listener and audio sources.
+- [Using Addons Manually](./examples/4-using-addons-manually/) - this scene shows how to manually import a module not using the CDN approach from previous weeks. This could be helpful if you need to import a custom module. Pay attention to the altered "source map" on the index.html page.
+
+### Links:
+
+- [Invisio - Spatial Audio Visualizer](https://anilcamci.github.io/Inviso/) - this tool helps you visualize spatial audio. From [Anıl Çamcı](https://anilcamci.github.io/)
