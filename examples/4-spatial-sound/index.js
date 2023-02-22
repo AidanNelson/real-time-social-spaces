@@ -77,6 +77,7 @@ function addSpatialAudio() {
       new THREE.SphereGeometry(1, 12, 12),
       new THREE.MeshBasicMaterial({ color: "blue" })
     );
+
     let audioSource = new THREE.PositionalAudio(audioListener);
 
     // load the audio file into the positional audio source
