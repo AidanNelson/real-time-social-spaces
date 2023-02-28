@@ -52,3 +52,10 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 ### Links:
 
 - [Invisio - Spatial Audio Visualizer](https://anilcamci.github.io/Inviso/) - this tool helps you visualize spatial audio. From [Anıl Çamcı](https://anilcamci.github.io/)
+
+## Week 5
+
+### Examples
+
+- [Using Event Handlers in Vanilla JS](./examples/5-event-listeners/) - this HTML / JS page shows the use of event handlers in vanilla JS as well as the use of different ways of declaring functions (i.e. anonymous arrow functions)
+- [Raycasting](./examples/5-raycasting/) - this scene shows how to use a raycaster to create interactions in THREE.js
