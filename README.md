@@ -59,3 +59,9 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 - [Using Event Handlers in Vanilla JS](./examples/5-event-listeners/) - this HTML / JS page shows the use of event handlers in vanilla JS as well as the use of different ways of declaring functions (i.e. anonymous arrow functions)
 - [Raycasting](./examples/5-raycasting/) - this scene shows how to use a raycaster to create interactions in THREE.js
+
+## Week 6
+
+### Examples
+
+- [Raycast Mouse Over](./examples/6-raycast-mouse-ver) - this example shows how we can create a mouse-over interaction with many objects using raycasting. It introduces the use of [userData](https://threejs.org/docs/index.html?q=object#api/en/core/Object3D.userData) to store a reference from one object to another and [layers](https://threejs.org/examples/?q=layer#webgl_layers), which can both be helpful three.js techniques!
