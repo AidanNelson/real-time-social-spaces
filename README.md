@@ -65,3 +65,15 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 ### Examples
 
 - [Raycast Mouse Over](./examples/6-raycast-mouse-over) - this example shows how we can create a mouse-over interaction with many objects using raycasting. It introduces the use of [userData](https://threejs.org/docs/index.html?q=object#api/en/core/Object3D.userData) to store a reference from one object to another and [layers](https://threejs.org/examples/?q=layer#webgl_layers), which can both be helpful three.js techniques!
+
+## Week 7
+
+### Examples
+
+- [in-class example](./examples/7-in-class-example) - this example shows how we can use javascript classes and import them to a javascript module file
+
+- [class syntax](./examples/7-using-class-syntax) - another example of class syntax
+
+- [first person controls](./examples/7-first-person-controls) - an implementation of first-person controls using the keyboard and mouse
+
+- [bonus example: using data to create instances of a class](./examples/7-bonus-using-data-and-text) - this bonus example uses JSON data to create unique instances of a class
