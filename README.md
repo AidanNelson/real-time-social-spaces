@@ -71,9 +71,12 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 ### Examples
 
 - [in-class example](./examples/7-in-class-example) - this example shows how we can use javascript classes and import them to a javascript module file.
-
 - [class syntax](./examples/7-using-class-syntax) - another example of class syntax.
-
 - [first person controls](./examples/7-first-person-controls) - an implementation of first-person controls using the keyboard and mouse.
-
 - [bonus example: using data to create instances of a class](./examples/7-bonus-using-data-and-text) - this bonus example uses JSON data to create unique instances of a class.
+
+## Week 8
+
+### Examples
+
+- [Advanced interactable](./examples/8-interactable-object) - this example shows more advanced usage of a class which manages internal 'state' (i.e. is it active or not?), uses linear interpolation to move smoothly, and uses a 'keys' object to keep track of which keys are currently pressed
