@@ -80,3 +80,10 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 ### Examples
 
 - [Advanced interactable](./examples/8-interactable-object) - this example shows more advanced usage of a class which manages internal 'state' (i.e. is it active or not?), uses linear interpolation to move smoothly, and uses a 'keys' object to keep track of which keys are currently pressed
+
+## Week 9
+
+### Examples
+
+- [Installing Node.js](./examples/9-installing-nodejs) - this guide shows how to install Node.js on your computer
+- [Using Node.js](./examples/9-using-nodejs) - this guide shows how to start a node.js application (i.e. a javascript file)
