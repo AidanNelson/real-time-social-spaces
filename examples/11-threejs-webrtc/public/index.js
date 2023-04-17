@@ -58,7 +58,6 @@ function establishWebsocketConnection() {
   });
 
   mySocket.on("introduction", (peerInfo) => {
-    console.log("hello");
     for (let theirId in peerInfo) {
       console.log("Adding client with id " + theirId);
       peers[theirId] = {};
@@ -135,27 +134,21 @@ function createPeerConnection(theirSocketId, isInitiator = false) {
   let peerConnection = new SimplePeer({ initiator: isInitiator });
   // simplepeer generates signals which need to be sent across socket
   peerConnection.on("signal", (data) => {
-    console.log("signal");
     mySocket.emit("signal", theirSocketId, mySocket.id, data);
   });
 
   // When we have a connection, send our stream
   peerConnection.on("connect", () => {
-    // Let's give them our stream
     peerConnection.addStream(localMediaStream);
-    console.log("Send our stream");
   });
 
   // Stream coming in to us
   peerConnection.on("stream", (stream) => {
-    console.log("Incoming Stream");
-
     updateClientMediaElements(theirSocketId, stream);
   });
 
   peerConnection.on("close", () => {
     console.log("Got close event");
-    // Should probably remove from the array of simplepeers
   });
 
   peerConnection.on("error", (err) => {
