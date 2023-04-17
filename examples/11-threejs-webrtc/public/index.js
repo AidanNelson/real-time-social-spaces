@@ -46,7 +46,7 @@ window.onload = async () => {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Socket.io
+// Socket.io Connections
 ////////////////////////////////////////////////////////////////////////////////
 
 // establishes socket connection
@@ -123,7 +123,7 @@ function establishWebsocketConnection() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Clients / WebRTC
+// SimplePeer WebRTC Connections
 ////////////////////////////////////////////////////////////////////////////////
 
 // this function sets up a peer connection and corresponding DOM elements for a specific client
@@ -144,7 +144,7 @@ function createPeerConnection(theirSocketId, isInitiator = false) {
 
   // Stream coming in to us
   peerConnection.on("stream", (stream) => {
-    updateClientMediaElements(theirSocketId, stream);
+    updatePeerMediaElements(theirSocketId, stream);
   });
 
   peerConnection.on("close", () => {
@@ -160,9 +160,8 @@ function createPeerConnection(theirSocketId, isInitiator = false) {
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-// Utilities 🚂
+// Media DOM Elements
 
-// created <video> element for local mediastream
 function createLocalVideoElement() {
   const videoElement = document.createElement("video");
   videoElement.id = "local_video";
@@ -177,9 +176,8 @@ function createLocalVideoElement() {
   document.body.appendChild(videoElement);
 }
 
-// created <video> element using client ID
 function addPeerMediaElements(_id) {
-  console.log("Creating <html> media elements for client with ID: " + _id);
+  console.log("Adding media element for peer with id: " + _id);
 
   const videoElement = document.createElement("video");
   videoElement.id = _id + "_video";
@@ -188,7 +186,7 @@ function addPeerMediaElements(_id) {
 
   document.body.appendChild(videoElement);
 
-  // create audio element for client
+  // create audio element for peer
   let audioEl = document.createElement("audio");
   audioEl.setAttribute("id", _id + "_audio");
   audioEl.controls = "controls";
@@ -200,7 +198,9 @@ function addPeerMediaElements(_id) {
   });
 }
 
-function updateClientMediaElements(_id, stream) {
+function updatePeerMediaElements(_id, stream) {
+  console.log("Updatings media element for peer with id: " + _id);
+
   let videoStream = new MediaStream([stream.getVideoTracks()[0]]);
   let audioStream = new MediaStream([stream.getAudioTracks()[0]]);
 
@@ -211,9 +211,8 @@ function updateClientMediaElements(_id, stream) {
   audioEl.srcObject = audioStream;
 }
 
-// remove <video> element and corresponding <canvas> using client ID
 function removePeerMediaElements(_id) {
-  console.log("Removing <video> element for client with id: " + _id);
+  console.log("Removing media element for peer with id: " + _id);
 
   let videoEl = document.getElementById(_id + "_video");
   if (videoEl != null) {
