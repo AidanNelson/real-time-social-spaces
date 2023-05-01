@@ -10,17 +10,17 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 ### Examples:
 
-- [Basic Setup](./examples/1-basic-scene/) - this scene implements a three.js scene, camera and renderer along with a 3D object
-- [Render Loop](./examples/1-render-loop/) - this scene uses window.requestAnimationFrame to implement a draw loop
+- [Basic Setup](./examples/01-basic-scene/) - this scene implements a three.js scene, camera and renderer along with a 3D object
+- [Render Loop](./examples/01-render-loop/) - this scene uses window.requestAnimationFrame to implement a draw loop
 
 ## Week 2
 
 ### Examples:
 
-- [Lights](./examples/2-lights/) - this scene adds lights and uses a Phong material which is affected by lights
-- [Shadows](./examples/2-textures/) - this scene uses lights and shadows
-- [Image Textures](./examples/2-image-texture/) - this scene uses an image file as a texture on a 3D object
-- [Video Textures](./examples/2-video-texture) - this scene uses a `<video>` element as a texture on a 3D object
+- [Lights](./examples/02-lights/) - this scene adds lights and uses a Phong material which is affected by lights
+- [Shadows](./examples/02-textures/) - this scene uses lights and shadows
+- [Image Textures](./examples/02-image-texture/) - this scene uses an image file as a texture on a 3D object
+- [Video Textures](./examples/02-video-texture) - this scene uses a `<video>` element as a texture on a 3D object
 
 ### Links:
 
@@ -32,9 +32,9 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 ### Examples
 
-- [Using Addons](./examples/3-using-addons/) - this scene introduces the ecosystem of THREE's 'addons' in the index.html file and organizes the javascript into an `init()` function
-- [Groups and Parenting](./examples/3-groups-and-parenting/) - this scene creates a bird with flapping wings through the use of groups and parenting
-- [Backgrounds](./examples/3-backgrounds/) - this scene shows 2 ways of making backgrounds, by adding a 'clear color' to the renderer, and through the use of an equirectangular image
+- [Using Addons](./examples/03-using-addons/) - this scene introduces the ecosystem of THREE's 'addons' in the index.html file and organizes the javascript into an `init()` function
+- [Groups and Parenting](./examples/03-groups-and-parenting/) - this scene creates a bird with flapping wings through the use of groups and parenting
+- [Backgrounds](./examples/03-backgrounds/) - this scene shows 2 ways of making backgrounds, by adding a 'clear color' to the renderer, and through the use of an equirectangular image
 
 ### Links:
 
@@ -45,9 +45,9 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 ### Examples
 
-- [Importing 3D Models](./examples/4-importing-3d-models/) - this scene shows how to add 3D models using a GLTF model loader.
-- [Spatial Sound](./examples/4-spatial-sound/) - this scene shows how to add a spatial audio listener and audio sources.
-- [Using Addons Manually](./examples/4-using-addons-manually/) - this scene shows how to manually import a module not using the CDN approach from previous weeks. This could be helpful if you need to import a custom module. Pay attention to the altered "source map" on the index.html page.
+- [Importing 3D Models](./examples/04-importing-3d-models/) - this scene shows how to add 3D models using a GLTF model loader.
+- [Spatial Sound](./examples/04-spatial-sound/) - this scene shows how to add a spatial audio listener and audio sources.
+- [Using Addons Manually](./examples/04-using-addons-manually/) - this scene shows how to manually import a module not using the CDN approach from previous weeks. This could be helpful if you need to import a custom module. Pay attention to the altered "source map" on the index.html page.
 
 ### Links:
 
@@ -57,33 +57,33 @@ To start these examples, use the VSCode LiveServer extension and press "Go Live"
 
 ### Examples
 
-- [Using Event Handlers in Vanilla JS](./examples/5-event-listeners/) - this HTML / JS page shows the use of event handlers in vanilla JS as well as the use of different ways of declaring functions (i.e. anonymous arrow functions)
-- [Raycasting](./examples/5-raycasting/) - this scene shows how to use a raycaster to create interactions in THREE.js
+- [Using Event Handlers in Vanilla JS](./examples/05-event-listeners/) - this HTML / JS page shows the use of event handlers in vanilla JS as well as the use of different ways of declaring functions (i.e. anonymous arrow functions)
+- [Raycasting](./examples/05-raycasting/) - this scene shows how to use a raycaster to create interactions in THREE.js
 
 ## Week 6
 
 ### Examples
 
-- [Raycast Mouse Over](./examples/6-raycast-mouse-over) - this example shows how we can create a mouse-over interaction with many objects using raycasting. It introduces the use of [userData](https://threejs.org/docs/index.html?q=object#api/en/core/Object3D.userData) to store a reference from one object to another and [layers](https://threejs.org/examples/?q=layer#webgl_layers), which can both be helpful three.js techniques!
+- [Raycast Mouse Over](./examples/06-raycast-mouse-over) - this example shows how we can create a mouse-over interaction with many objects using raycasting. It introduces the use of [userData](https://threejs.org/docs/index.html?q=object#api/en/core/Object3D.userData) to store a reference from one object to another and [layers](https://threejs.org/examples/?q=layer#webgl_layers), which can both be helpful three.js techniques!
 
 ## Week 7
 
 ### Examples
 
-- [in-class example](./examples/7-in-class-example) - this example shows how we can use javascript classes and import them to a javascript module file.
-- [class syntax](./examples/7-using-class-syntax) - another example of class syntax.
-- [first person controls](./examples/7-first-person-controls) - an implementation of first-person controls using the keyboard and mouse.
-- [bonus example: using data to create instances of a class](./examples/7-bonus-using-data-and-text) - this bonus example uses JSON data to create unique instances of a class.
+- [in-class example](./examples/07-in-class-example) - this example shows how we can use javascript classes and import them to a javascript module file.
+- [class syntax](./examples/07-using-class-syntax) - another example of class syntax.
+- [first person controls](./examples/07-first-person-controls) - an implementation of first-person controls using the keyboard and mouse.
+- [bonus example: using data to create instances of a class](./examples/07-bonus-using-data-and-text) - this bonus example uses JSON data to create unique instances of a class.
 
 ## Week 8
 
 ### Examples
 
-- [Advanced interactable](./examples/8-interactable-object) - this example shows more advanced usage of a class which manages internal 'state' (i.e. is it active or not?), uses linear interpolation to move smoothly, and uses a 'keys' object to keep track of which keys are currently pressed
+- [Advanced interactable](./examples/08-interactable-object) - this example shows more advanced usage of a class which manages internal 'state' (i.e. is it active or not?), uses linear interpolation to move smoothly, and uses a 'keys' object to keep track of which keys are currently pressed
 
 ## Week 9
 
 ### Examples
 
-- [Installing Node.js](./examples/9-installing-nodejs) - this guide shows how to install Node.js on your computer
-- [Using Node.js](./examples/9-using-nodejs) - this guide shows how to start a node.js application (i.e. a javascript file)
+- [Installing Node.js](./examples/09-installing-nodejs) - this guide shows how to install Node.js on your computer
+- [Using Node.js](./examples/09-using-nodejs) - this guide shows how to start a node.js application (i.e. a javascript file)
