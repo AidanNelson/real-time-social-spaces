@@ -119,4 +119,10 @@ function loop() {
   window.requestAnimationFrame(loop); // pass the name of your loop function into this function
 }
 
-init();
+let hasInitialized = false;
+window.addEventListener("click", () => {
+  if (!hasInitialized) {
+    hasInitialized = true;
+    init();
+  }
+});
