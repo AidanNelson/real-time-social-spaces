@@ -4,12 +4,11 @@ This example uses the OrbitControls addon by importing it separately from the ma
 */
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { getArtworkData } from "./getArtworkData.js";
 
 let scene, camera, renderer;
+let imageDisplays = [];
 
-let texLoader = new THREE.TextureLoader();
-
-let imageBoxes = [];
 
 function init() {
   // create a scene in which all other objects will exist
@@ -37,83 +36,81 @@ function init() {
   loop();
 
   // call our function to get and display images from an API
-  getDataAndDisplay("brooklyn");
+  getDataAndDisplay();
+}
+init();
+
+
+// this function gets data from the API and then adds new "MyImageDisplay" objects to the scene
+// it is a special "asynchronous" function, which means it will wait for the data to be ready before continuing
+async function getDataAndDisplay() {
+  let artworkData = await getArtworkData("Brooklyn");
+
+  console.log(artworkData);
+
+  for (let i = 0; i < artworkData.length; i++) {
+    // first we get the URL of the artwork
+    let image_id = artworkData[i].data.image_id; 
+    let imageUrl = "https://www.artic.edu/iiif/2/" + image_id + "/full/843,/0/default.jpg";
+
+    // then we create a new MyImageDisplay object and pass in the scene and the URL
+    let imageDisplay = new MyImageDisplay(scene,imageUrl);
+
+    // then we set the location of the display
+    imageDisplay.setPosition(i*2, 0, 0); // arrange them in a line
+
+    // finally, we add the imageDisplay to an array so we can acces it in our draw loop
+    imageDisplays.push(imageDisplay);
+  }
 }
 
+
+// our draw loop
 function loop() {
-  for (let i = 0; i < imageBoxes.length; i++) {
-    imageBoxes[i].spin(0.01);
+  // do something to each image display
+  for (let i = 0; i < imageDisplays.length; i++) {
+    imageDisplays[i].doAction(0.01);
   }
   // finally, take a picture of the scene and show it in the <canvas>
   renderer.render(scene, camera);
-
-  window.requestAnimationFrame(loop); // pass the name of your loop function into this function
+  // ask our window to draw the next frame when it's ready
+  window.requestAnimationFrame(loop); 
 }
 
-init();
 
-// here we're using a class to encapsulate all of the code related to displaying an image and
-// spinning it around.
+
+
+
+
+// here we're using a class to encapsulate all of the code related to displaying an image
 class MyImageDisplay {
-  constructor(url) {
-    console.log("Adding image to the space", url);
-    let imageTexture = texLoader.load(url);
-    console.log(imageTexture);
+  constructor(scene, imageUrl) {
+    // load the image texture from the provided URL
+    let imageTexture = new THREE.TextureLoader().load(imageUrl);
 
     // create geometry and material with texture
     let geo = new THREE.BoxGeometry(1, 1, 1);
     let mat = new THREE.MeshBasicMaterial({ map: imageTexture });
     let mesh = new THREE.Mesh(geo, mat);
 
-    // save the mesh to "THIS" object so we can access it elsewhere in the class
+    // save the mesh to 'this' object so we can access it elsewhere in the class
     this.mesh = mesh;
 
     // add it to the scene add add a position
     scene.add(mesh);
-    mesh.position.set(
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 10
-    );
   }
 
-  spin(amount) {
+  // a method which sets the position of the mesh
+  setPosition(x, y, z) {
+    this.mesh.position.x = x;
+    this.mesh.position.y = y;
+    this.mesh.position.z = z;
+  }
+
+  // a method which does something to the mesh
+  doAction(amount) {
     this.mesh.rotateX(amount);
     this.mesh.rotateY(amount);
     this.mesh.rotateZ(amount);
   }
-}
-
-// this function is calling an API (the Art Institute of Chicago's web api)
-// to get image URLs then calling the displayImage function with those URLs
-function getDataAndDisplay(query) {
-  let url =
-    "https://api.artic.edu/api/v1/artworks/search?q=" +
-    query +
-    "&query[term][is_public_domain]=true";
-
-  let image_id = "47c94f35-2c05-9eb2-4c3f-6c841724a0a1";
-  let imageUrl =
-    "https://www.artic.edu/iiif/2/" + image_id + "/full/843,/0/default.jpg";
-  console.log(imageUrl);
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(json);
-      let data = json.data;
-      for (let i = 0; i < data.length; i++) {
-        let itemInfoUrl = data[i].api_link;
-        fetch(itemInfoUrl)
-          .then((res) => res.json())
-          .then((json) => {
-            let image_id = json.data.image_id;
-            let imageUrl =
-              "https://www.artic.edu/iiif/2/" +
-              image_id +
-              "/full/843,/0/default.jpg";
-            // displayImage(imageUrl);
-            imageBoxes.push(new MyImageDisplay(imageUrl));
-          });
-      }
-    });
 }
