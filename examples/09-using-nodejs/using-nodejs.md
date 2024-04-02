@@ -5,7 +5,7 @@ This folder (called 9-using-nodejs) contains a node.js project. In this project 
 You can start this server from the terminal built into VSCode. First, we need to open a terminal window, which you by clicking `New Terminal` under the `Terminal` menu item. Then, we need to change directory to move our terminal window into the correct folder. On Mac OS, you can do this as follows:
 
 ```sh
-cd examples/9-using-nodejs
+cd examples/09-using-nodejs
 ```
 
 Finally, we can run our server using our newly installed `node` command:
