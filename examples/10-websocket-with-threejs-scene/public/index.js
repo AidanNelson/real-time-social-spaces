@@ -1,132 +1,108 @@
-/*
-This example sets up a simple three.js scene which connects to a websocket server.
-
-*/
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { FirstPersonControls } from "./FirstPersonControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-let scene, camera, renderer;
+// create variables and make them available globally
+let scene, myRenderer, camera;
 
-let ground;
-let mouse;
-let socket; // create a global socket object
+// keep track of which frame we are on
+let frameCount = 0;
+
+// keep track of our controls so we can update them in the draw loop
+let controls;
+
+let socket;
+
 
 function init() {
-  // create a scene in which all other objects will exist
-  scene = new THREE.Scene();
 
-  // create a camera and position it in space
-  let aspect = window.innerWidth / window.innerHeight;
-  camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-  camera.position.z = 5; // place the camera in space
-  camera.position.y = 5;
+  // create a scene and give it a background color
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color("rgb(20,20,20)");
+
+  // create the renderer which will actually draw our scene and add it to the document
+  myRenderer = new THREE.WebGLRenderer();
+  myRenderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(myRenderer.domElement);
+
+  // create our camera
+  camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.set(2, 2, 2);
   camera.lookAt(0, 0, 0);
 
-  // the renderer will actually show the camera view within our <canvas>
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
 
-  // add shadows
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+  // add orbit controls so we can navigate our scene while testing
+  // controls = new OrbitControls(camera, myRenderer.domElement);
+  controls = new FirstPersonControls(scene, camera, myRenderer);
 
-  let groundGeo = new THREE.BoxGeometry(10, 1, 10);
-  let groundMat = new THREE.MeshPhongMaterial({ color: "yellow" });
-  ground = new THREE.Mesh(groundGeo, groundMat);
-  scene.add(ground);
-  ground.receiveShadow = true;
+  // mesh
+  let grid = new THREE.GridHelper(100, 100);
+  scene.add(grid);
 
-  // add orbit controls
-  let controls = new OrbitControls(camera, renderer.domElement);
+  // add websocket support
+  setupWebsocketConnection();
 
-  setupEnvironment();
-  establishWebsocketConnection();
-  setupRaycastInteraction();
+  window.addEventListener('keydown', onKeyDown);
 
-  loop();
+  // start the draw loop
+  draw();
 }
 
-function establishWebsocketConnection() {
-  socket = io();
-
-  socket.on("msg", (msg) => {
-    console.log(
-      "Got a message from friend with ID ",
-      msg.from,
-      "and data:",
-      msg.data
-    );
-    let geo = new THREE.IcosahedronGeometry(0.25, 0);
-    let mat = new THREE.MeshPhongMaterial({ color: "blue" });
-    let mesh = new THREE.Mesh(geo, mat);
-    scene.add(mesh);
-    mesh.position.set(msg.data.x, msg.data.y, msg.data.z);
-    mesh.castShadow = true;
-  });
-
-  // document.addEventListener(
-  //   "keyup",
-  //   (ev) => {
-  //     if (ev.key === "t") {
-  //       socket.emit("msg", Date.now());
-  //     }
-  //   },
-  //   false
-  // );
-}
-
-function setupRaycastInteraction() {
-  mouse = new THREE.Vector2(0, 0);
-  document.addEventListener(
-    "mousemove",
-    (ev) => {
-      // three.js expects 'normalized device coordinates' (i.e. between -1 and 1 on both axes)
-      mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
-    },
-    false
-  );
-
-  let raycaster = new THREE.Raycaster();
-  document.addEventListener("click", (ev) => {
-    raycaster.setFromCamera(mouse, camera);
-
-    const intersects = raycaster.intersectObject(ground);
-
-    if (intersects.length) {
-      let point = intersects[0].point;
-      console.log(point);
-      socket.emit("msg", point);
-
-      // add our own
-      let geo = new THREE.IcosahedronGeometry(0.25, 0);
-      let mat = new THREE.MeshPhongMaterial({ color: "red" });
-      let mesh = new THREE.Mesh(geo, mat);
-      scene.add(mesh);
-      mesh.position.set(point.x, point.y, point.z);
-      mesh.castShadow = true;
+function onKeyDown(ev){
+  if (ev.key === "p"){
+    console.log('placing object');
+    let myMessage = {
+      x: camera.position.x,
+      y: 0,
+      z: camera.position.z,
     }
-  });
+    socket.emit('msg', myMessage);
+  }
 }
 
-function setupEnvironment() {
-  //add a light
-  let myColor = new THREE.Color(0xffaabb);
-  let ambientLight = new THREE.AmbientLight(myColor, 0.5);
-  scene.add(ambientLight);
+function setupWebsocketConnection(){
+  socket = io();
+  socket.on('msg', onMessage);
+}
+function onMessage(msg){
+  console.log(msg);
 
-  // add a directional light
-  let myDirectionalLight = new THREE.DirectionalLight(myColor, 0.85);
-  myDirectionalLight.position.set(-5, 3, -5);
-  myDirectionalLight.lookAt(0, 0, 0);
-  scene.add(myDirectionalLight);
-  myDirectionalLight.castShadow = true;
+  let geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+  let mat = new THREE.MeshBasicMaterial({ color: "rgb(255,0,0)" });
+  let cube = new THREE.Mesh(geo, mat);
+  cube.position.set(msg.x, msg.y, msg.z);
+  cube.castShadow = true; 
+  cube.receiveShadow = true;
+  scene.add(cube);
+  setTimeout(() => {
+    scene.remove(cube);
+    console.log('removed cube');
+  },1000);
 }
 
-function loop() {
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(loop);
+
+function draw() {
+  controls.update();
+  frameCount = frameCount + 1;
+
+  myRenderer.render(scene, camera);
+  console.log('placing object');
+  let myMessage = {
+    x: camera.position.x,
+    y: 0,
+    z: camera.position.z,
+  }
+  socket.emit('msg', myMessage);
+
+  // ask the browser to render another frame when it is ready
+  window.requestAnimationFrame(draw);
 }
 
+// get everything started by calling init
 init();

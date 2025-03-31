@@ -13,7 +13,6 @@ console.log("Server is running on http://localhost:8080");
 /////SOCKET.IO///////
 const io = require("socket.io")().listen(server);
 
-const peers = {};
 
 io.on("connection", (socket) => {
   console.log(
@@ -21,18 +20,12 @@ io.on("connection", (socket) => {
     socket.id
   );
 
-  peers[socket.id] = {};
-
-  console.log("Current peers:", peers);
-
   socket.on("msg", (data) => {
     console.log("Got message from client with id ", socket.id, ":", data);
-    let messageWithId = { from: socket.id, data: data };
-    socket.broadcast.emit("msg", messageWithId);
+    io.emit("msg", data);
   });
 
   socket.on("disconnect", () => {
     console.log("Someone with ID", socket.id, "left the server");
-    delete peers[socket.id];
   });
 });
