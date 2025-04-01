@@ -1,7 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { FirstPersonControls } from "./FirstPersonControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 // create variables and make them available globally
 let scene, myRenderer, camera;
@@ -14,6 +12,30 @@ let controls;
 
 let socket;
 
+function setupMySocket(){
+  socket = io();
+  socket.on('msg', onMessage);
+}
+
+function onMessage(msg){
+  console.log(msg);
+  let geo = new THREE.TorusGeometry(2,0.1,12,12);
+  let mat = new THREE.MeshNormalMaterial();
+  let mesh = new THREE.Mesh(geo,mat);
+  mesh.position.set(msg.x,msg.y,msg.z);
+  scene.add(mesh);
+}
+
+function onKeyDown(ev){
+  if (ev.key === "p"){
+    let myMessage = {
+      x: camera.position.x,
+      y: camera.position.y,
+      z: camera.position.z
+    };
+    socket.emit('msg', myMessage);
+  }
+}
 
 function init() {
 
@@ -38,7 +60,6 @@ function init() {
 
 
   // add orbit controls so we can navigate our scene while testing
-  // controls = new OrbitControls(camera, myRenderer.domElement);
   controls = new FirstPersonControls(scene, camera, myRenderer);
 
   // mesh
@@ -46,7 +67,8 @@ function init() {
   scene.add(grid);
 
   // add websocket support
-  setupWebsocketConnection();
+  setupMySocket();
+
 
   window.addEventListener('keydown', onKeyDown);
 
@@ -54,51 +76,11 @@ function init() {
   draw();
 }
 
-function onKeyDown(ev){
-  if (ev.key === "p"){
-    console.log('placing object');
-    let myMessage = {
-      x: camera.position.x,
-      y: 0,
-      z: camera.position.z,
-    }
-    socket.emit('msg', myMessage);
-  }
-}
-
-function setupWebsocketConnection(){
-  socket = io();
-  socket.on('msg', onMessage);
-}
-function onMessage(msg){
-  console.log(msg);
-
-  let geo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  let mat = new THREE.MeshBasicMaterial({ color: "rgb(255,0,0)" });
-  let cube = new THREE.Mesh(geo, mat);
-  cube.position.set(msg.x, msg.y, msg.z);
-  cube.castShadow = true; 
-  cube.receiveShadow = true;
-  scene.add(cube);
-  setTimeout(() => {
-    scene.remove(cube);
-    console.log('removed cube');
-  },1000);
-}
-
-
 function draw() {
   controls.update();
   frameCount = frameCount + 1;
 
   myRenderer.render(scene, camera);
-  console.log('placing object');
-  let myMessage = {
-    x: camera.position.x,
-    y: 0,
-    z: camera.position.z,
-  }
-  socket.emit('msg', myMessage);
 
   // ask the browser to render another frame when it is ready
   window.requestAnimationFrame(draw);

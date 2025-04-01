@@ -14,18 +14,18 @@ console.log("Server is running on http://localhost:8080");
 const io = require("socket.io")().listen(server);
 
 
-io.on("connection", (socket) => {
-  console.log(
-    "Someone joined our server using socket.io.  Their socket id is",
-    socket.id
-  );
+io.on("connection", onConnection);
 
-  socket.on("msg", (data) => {
-    console.log("Got message from client with id ", socket.id, ":", data);
-    io.emit("msg", data);
-  });
 
-  socket.on("disconnect", () => {
-    console.log("Someone with ID", socket.id, "left the server");
-  });
-});
+function onConnection(socket){
+  console.log('Someone connected to our websocket server!');
+  console.log('This is their ID: ', socket.id);
+
+  socket.on('msg', onMessage);
+}
+
+function onMessage(msg){
+  console.log('We received a message from one of the sockets:');
+  console.log(msg);
+  io.emit('msg', msg);
+}
